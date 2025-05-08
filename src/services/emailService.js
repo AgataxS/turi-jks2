@@ -1,13 +1,27 @@
+
 import emailjs from "@emailjs/browser";
 
-export async function sendBookingEmail(data) {
+
+export async function sendBookingEmail({
+  name,
+  email,
+  date,
+  packageName,
+  isPromo,
+}) {
+  const templateParams = {
+    to_email: "agustinteje1@gmail.com",
+    subject: `${isPromo ? "PROMOCIÓN · " : ""}Reserva — ${packageName}`,
+    name,
+    email,
+    date,
+    packageName,
+  };
+
   return emailjs.send(
-    import.meta.env.VITE_EMAILJS_SERVICE_ID,
-    import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-    {
-      ...data,
-      to_email: import.meta.env.VITE_COMPANY_EMAIL,
-    },
-    import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+    import.meta.env.VITE_EMAILJS_SERVICE,
+    import.meta.env.VITE_EMAILJS_TEMPLATE,
+    templateParams,
+    import.meta.env.VITE_EMAILJS_PUBLIC
   );
 }

@@ -1,36 +1,36 @@
+
 import { createContext, useReducer, useContext } from "react";
 
 const BookingContext = createContext();
 
-const initialState = {
-  package: null,
-  date: "",
-  method: "email",
-  extras: [],
+const initial = {
+  package: null,   
+  extras: [],      
+  method: "email", 
 };
 
 function reducer(state, action) {
   switch (action.type) {
     case "SET_PACKAGE":
       return { ...state, package: action.payload };
-    case "SET_DATE":
-      return { ...state, date: action.payload };
+    case "SET_EXTRAS":
+      return { ...state, extras: action.payload };
     case "SET_METHOD":
       return { ...state, method: action.payload };
-    case "TOGGLE_EXTRA":
-      return state.extras.find((e) => e.id === action.payload.id)
-        ? { ...state, extras: state.extras.filter((e) => e.id !== action.payload.id) }
-        : { ...state, extras: [...state.extras, action.payload] };
     case "RESET":
-      return initialState;
+      return initial;
     default:
       return state;
   }
 }
 
 export function BookingProvider({ children }) {
-  const [state, dispatch] = useReducer(reducer, initialState);
-  const total = (state.package?.price || 0) + state.extras.reduce((s, e) => s + e.price, 0);
+  const [state, dispatch] = useReducer(reducer, initial);
+
+
+  const extrasTotal = state.extras.reduce((s, e) => s + e.price, 0);
+  const total = (state.package?.price || 0) + extrasTotal;
+
   return (
     <BookingContext.Provider value={{ state, dispatch, total }}>
       {children}
@@ -38,4 +38,6 @@ export function BookingProvider({ children }) {
   );
 }
 
-export const useBooking = () => useContext(BookingContext);
+export function useBooking() {
+  return useContext(BookingContext);
+}

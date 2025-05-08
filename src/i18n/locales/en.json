@@ -1,0 +1,26 @@
+{
+  "nav": {
+    "packages": "Packages",
+    "contact": "Contact us"
+  },
+  "home": {
+    "headline": "Live the Uyuni Salt Flats",
+    "tagline": "Unforgettable experiences, safe routes and one-click bookings.",
+    "cta": "Explore all tours",
+    "promos": "Deals of the month",
+    "video": "Discover Uyuni from above",
+    "mission": "Our mission",
+    "vision": "Our vision",
+    "services": "Services & Manual",
+    "downloadPdf": "Download manual PDF",
+    "featuredTours": "Featured tours"
+  },
+  "booking": {
+    "name": "Name",
+    "email": "E-mail",
+    "date": "Desired date",
+    "total": "Total",
+    "confirm": "Confirm booking",
+    "sending": "Sending…"
+  }
+}

@@ -1,18 +1,19 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import es from "./es.json";
-import en from "./en.json";
-import zh from "./zh.json";
+import LanguageDetector from "i18next-browser-languagedetector";
 
-i18n.use(initReactI18next).init({
-  resources: {
-    es: { translation: es },
-    en: { translation: en },
-    zh: { translation: zh },
-  },
-  lng: "es",
-  fallbackLng: "es",
-  interpolation: { escapeValue: false },
-});
+import es from "./locales/es.json";
+import en from "./locales/en.json";
+import zh from "./locales/zh.json";
+
+i18n
+  .use(LanguageDetector)        
+  .use(initReactI18next)
+  .init({
+    resources: { es, en, zh },
+    fallbackLng: "es",            
+    interpolation: { escapeValue: false },
+    detection: { order: ["localStorage", "navigator"] },
+  });
 
 export default i18n;

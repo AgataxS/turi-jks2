@@ -5,3 +5,12 @@
 html {
   scroll-behavior: smooth;
 }
+.perspective {
+  perspective: 1000px;
+}
+.rotateY-180 {
+  transform: rotateY(180deg);
+}
+.rotateY-0 {
+  transform: rotateY(0deg);
+}
