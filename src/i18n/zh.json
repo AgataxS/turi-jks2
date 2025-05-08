@@ -1,0 +1,17 @@
+{
+    "navbar": {
+      "packages": "套餐"
+    },
+    "home": {
+      "headline": "乌尤尼盐沼旅游",
+      "tagline": "探索精彩行程，轻松预订。"
+    },
+    "booking": {
+      "title": "预订您的冒险之旅"
+    },
+    "confirmation": {
+      "thanks": "感谢您的预订！",
+      "received": "我们已收到您的请求，将尽快与您联系。"
+    }
+  }
+  

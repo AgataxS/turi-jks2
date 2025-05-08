@@ -1,0 +1,17 @@
+{
+    "navbar": {
+      "packages": "Packages"
+    },
+    "home": {
+      "headline": "Salar Tourism App",
+      "tagline": "Explore our amazing Uyuni tours and book hassle‑free."
+    },
+    "booking": {
+      "title": "Book your adventure"
+    },
+    "confirmation": {
+      "thanks": "Thanks for booking!",
+      "received": "We've received your request. We'll contact you soon with details."
+    }
+  }
+  
