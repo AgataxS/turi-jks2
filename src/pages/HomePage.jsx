@@ -7,6 +7,7 @@ import { HiSparkles } from "react-icons/hi2";
 import { motion } from "framer-motion";
 import { useBooking } from "../context/BookingContext";
 
+
 /* Animación reutilizable */
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -89,53 +90,64 @@ export default function HomePage() {
           />
         </motion.div>
       </section>
+{/* MISIÓN + ICONO + VISIÓN */}
+<section className="bg-primary text-white py-24">
+  <div className="container mx-auto grid gap-16 md:grid-cols-3 items-start">
+    {/* ---------- MISIÓN ---------- */}
+    <motion.article
+      variants={fadeUp}
+      custom={0}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true }}
+      className="text-center md:text-left md:pr-8"
+    >
+      <h3 className="text-2xl font-serif mb-4">
+        {t("home.mission", "Nuestra misión")}
+      </h3>
+      <p className="leading-relaxed opacity-90 max-w-md mx-auto md:mx-0">
+        Brindar atención excepcional y responsable, mostrando la riqueza cultural
+        y natural de Bolivia mientras protegemos nuestro medio ambiente.
+      </p>
+    </motion.article>
 
-      {/* MISIÓN / VISIÓN + LOGO */}
-      <section className="bg-primary text-white py-24">
-        <div className="container mx-auto grid gap-16 md:grid-cols-3 items-center">
-          {[
-            {
-              title: t("home.mission", "Nuestra misión"),
-              text: "Brindar atención excepcional y responsable, mostrando la riqueza cultural y natural de Bolivia mientras protegemos nuestro medio ambiente.",
-            },
-            { isLogo: true },
-            {
-              title: t("home.vision", "Nuestra visión"),
-              text: "Ser la empresa líder en turismo especializado del sudoeste potosino, reconocida por calidad, ética y compromiso con la comunidad.",
-            },
-          ].map((b, i) =>
-            b.isLogo ? (
-              <motion.div
-                key={i}
-                variants={fadeUp}
-                custom={i}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true }}
-                className="flex justify-center"
-              >
-                <img
-                  src="/assets/images/logo-sj.png"
-                  alt="Santiago Jukil"
-                  className="h-44 drop-shadow-lg"
-                />
-              </motion.div>
-            ) : (
-              <motion.article
-                key={i}
-                variants={fadeUp}
-                custom={i}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true }}
-              >
-                <h3 className="text-2xl font-serif mb-4">{b.title}</h3>
-                <p className="leading-relaxed opacity-90">{b.text}</p>
-              </motion.article>
-            )
-          )}
-        </div>
-      </section>
+    {/* ---------- ICONO CENTRAL ---------- */}
+    <motion.div
+      variants={fadeUp}
+      custom={1}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true }}
+      className="flex justify-center"
+    >
+      <img
+        src="/assets/images/mission-vision-icon.png"
+        alt="Misión y Visión"
+        className="h-40 w-auto drop-shadow-lg"
+      />
+    </motion.div>
+
+    {/* ---------- VISIÓN ---------- */}
+    <motion.article
+      variants={fadeUp}
+      custom={2}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true }}
+      className="text-center md:text-right md:pl-8"
+    >
+      <h3 className="text-2xl font-serif mb-4">
+        {t("home.vision", "Nuestra visión")}
+      </h3>
+      <p className="leading-relaxed opacity-90 max-w-md mx-auto md:mx-0">
+        Ser la empresa líder en turismo especializado del sudoeste potosino,
+        reconocida por calidad, ética y compromiso con la comunidad.
+      </p>
+    </motion.article>
+  </div>
+</section>
+
+
 
       {/* PROMOCIONES DESTACADAS */}
       <section className="container mx-auto py-20">

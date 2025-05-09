@@ -1,4 +1,3 @@
-// src/components/booking/BookingForm.jsx
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -13,7 +12,10 @@ import { useTranslation } from "react-i18next";
 
 const schema = yup.object({
   name: yup.string().required("Nombre requerido"),
-  email: yup.string().email("Correo inválido").required("Correo requerido"),
+  email: yup
+    .string()
+    .email("Correo inválido")
+    .required("Correo requerido"),
   date: yup.string().required("Fecha requerida"),
 });
 
@@ -25,15 +27,25 @@ export default function BookingForm() {
     formState: { errors, isSubmitting },
   } = useForm({ resolver: yupResolver(schema) });
 
-  const { state, total, dispatch } = useBooking();
+  const { state, total } = useBooking();
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
+    const { package: pkg, extras } = state;
+
+    /* --- si es promo anteponemos la palabra PROMOCIÓN --- */
+    const displayName = pkg?.isPromotion
+      ? `PROMOCIÓN – ${pkg.title ?? pkg.name}`
+      : pkg?.name ?? "Salar Tour";
+
+    const extrasList = extras.length
+      ? extras.map((e) => e.name).join(", ")
+      : "Sin extras";
+
     const payload = {
       ...data,
-      packageName: state.package?.name || "Salar Tour",
-      isPromo: state.package?.promo || false,
-      extras: state.extras.map((e) => e.name).join(", ") || "Sin extras",
+      packageName: displayName,
+      extras: extrasList,
       total,
     };
 
@@ -43,33 +55,26 @@ export default function BookingForm() {
     } else {
       const link = buildWhatsappLink({
         number: import.meta.env.VITE_WHATSAPP_NUMBER,
-        packageName: `${
-          payload.isPromo ? "PROMO · " : ""
-        }${payload.packageName}`,
+        packageName: `${displayName} + ${extrasList}`,
         date: data.date,
         name: data.name,
-        total,
       });
       window.open(link, "_blank");
       navigate("/confirmed");
     }
-
-    dispatch({ type: "RESET" });
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      {/* Cabecera */}
-      <div>
-        <h3 className="text-lg font-bold text-primary">
-          {state.package ? state.package.name : "Reserva personalizada"}
-        </h3>
-        {state.package?.promo && (
-          <span className="inline-block bg-accent/10 text-accent text-xs font-semibold px-2 py-[2px] rounded-full mt-1">
-            PROMOCIÓN
-          </span>
-        )}
-      </div>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="max-w-xl mx-auto bg-white rounded-2xl shadow-xl p-8 space-y-6"
+    >
+      <h3 className="text-2xl font-serif font-bold text-primary text-center">
+        {state.package?.isPromotion
+          ? `PROMOCIÓN – ${state.package.title}`
+          : state.package?.name ??
+            t("booking.choose", "Reserva personalizada")}
+      </h3>
 
       {/* Nombre */}
       <div>
@@ -81,7 +86,9 @@ export default function BookingForm() {
           className="w-full rounded border border-slate-300 px-3 py-2 focus:ring-2 focus:ring-primary/40 outline-none"
         />
         {errors.name && (
-          <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>
+          <p className="text-red-500 text-xs mt-1">
+            {errors.name.message}
+          </p>
         )}
       </div>
 
@@ -95,37 +102,44 @@ export default function BookingForm() {
           className="w-full rounded border border-slate-300 px-3 py-2 focus:ring-2 focus:ring-primary/40 outline-none"
         />
         {errors.email && (
-          <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
+          <p className="text-red-500 text-xs mt-1">
+            {errors.email.message}
+          </p>
         )}
       </div>
 
       {/* Fecha */}
       <div>
-        <DatePicker label={t("booking.date", "Fecha deseada")} {...register("date")} />
+        <DatePicker
+          label={t("booking.date", "Fecha deseada")}
+          {...register("date")}
+        />
         {errors.date && (
-          <p className="text-red-500 text-xs mt-1">{errors.date.message}</p>
+          <p className="text-red-500 text-xs mt-1">
+            {errors.date.message}
+          </p>
         )}
       </div>
 
-      {/* Método */}
       <ContactOptions />
-
-      {/* Extras */}
       <ExtrasSelector />
 
-      {/* Total */}
       <div className="text-right font-bold text-lg text-accent">
         {t("booking.total", "Total")}:{" "}
-        {total.toLocaleString("es-BO", { style: "currency", currency: "BOB" })}
+        {total.toLocaleString("es-BO", {
+          style: "currency",
+          currency: "BOB",
+        })}
       </div>
 
-      {/* Botón */}
       <button
         type="submit"
         disabled={isSubmitting}
         className="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primary/90 disabled:opacity-50 transition"
       >
-        {isSubmitting ? "Enviando…" : t("booking.confirm", "Confirmar reserva")}
+        {isSubmitting
+          ? t("booking.sending", "Enviando…")
+          : t("booking.confirm", "Confirmar reserva")}
       </button>
     </form>
   );

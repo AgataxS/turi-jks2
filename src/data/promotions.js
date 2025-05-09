@@ -1,7 +1,7 @@
-
 export const promotions = [
   {
     id: "promo-fd",
+    isPromotion: true,                 
     slug: "full-day-sunset",
     title: "Full Day + Tour de Estrellas",
     description: "Auroras de sal y efecto espejo nocturno –15 % descuento.",
@@ -11,20 +11,22 @@ export const promotions = [
   },
   {
     id: "promo-lagunas",
+    isPromotion: true,                 
     slug: "lagunas-2x1",
     title: "Lagunas Altiplánicas 2×1 niños",
     description: "Niños menores de 10 años gratis en tours familiares en mayo.",
     price: 3800,
     image: "/assets/images/promo-lagunas.jpg",
-    duration: "2 días",
+    duration: "2 días / 1 noche",
   },
   {
     id: "promo-hotel",
+    isPromotion: true,                
     slug: "upgrade-hotel-sal",
     title: "Upgrade hotel de sal",
     description: "Reserva 3 días / 2 noches y obtén suite sin costo adicional.",
     price: 0,
     image: "/assets/images/promo-hotel.jpg",
-    duration: "3 días",
+    duration: "3 días / 2 noches",
   },
 ];
